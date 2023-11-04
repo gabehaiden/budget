@@ -1,15 +1,21 @@
-import { Request, Response } from 'express';
+import { eq } from 'drizzle-orm';
 import { db } from '../config/db';
 import { users } from '../config/schema';
-import User from '../model/User';
+import { TUser } from '../model/User';
 
-export const createUser = async (req: Request, res: Response) => {
-  const newUser = User.parse(req.body)
-  
+export const findUserById = async (id: string) => {
   try {
-    await db.insert(users).values(newUser)
-    res.send(201)
+    const user = await db.select().from(users).where(eq(users.user_id, +id))
+    return user[0]
   } catch (error) {
-    throw res.status(500).send({ error: error })
+    throw Error
+  }
+}
+
+export const insertUser = async (user: TUser ) => {
+  try {
+    await db.insert(users).values(user)
+  } catch (error) {
+    throw Error
   }
 }
