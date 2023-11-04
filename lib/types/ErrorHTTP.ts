@@ -1,0 +1,1 @@
+export type ErrorHTTP = { error: string }
