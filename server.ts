@@ -1,6 +1,7 @@
 import bodyParser from 'body-parser'
 import express, { json } from 'express'
-import UserRouter from './lib/router/UserRouter'
+import ProductRouter from './lib/router/productRouter'
+import UserRouter from './lib/router/userRouter'
 
 const app = express()
 const PORT = 3000
@@ -13,5 +14,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.raw());
 
 app.use('/user', UserRouter)
+app.use('/product', ProductRouter)
 
 app.listen(PORT, () => console.log(`running on port ${PORT}`))
